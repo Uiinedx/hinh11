@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hình học của Những Chiếc Bóng: Thấu hiểu Phép Chiếu</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<style>
+body {
+    background-color: #F8FAFC;
+    color: #0F172A;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 350px;
+    max-height: 400px;
+}
+@media (min-width: 768px) {
+    .chart-container {
+        height: 400px;
+    }
+}
+.plotly-container {
+    width: 100%;
+    height: 500px;
+}
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 4px solid #3B82F6;
+}
+</style>
+</head>
+<body class="antialiased pb-20">
+
+<!-- PALETTE: Vibrant Tech (Deep Navy #0F172A, Bright Blue #3B82F6, Electric Cyan #06B6D4, Vibrant Yellow #FBBF24, White #FFFFFF) -->
+<!-- NARRATIVE PLAN: 
+     1. Giới thiệu tổng quan (Hero)
+     2. Ba yếu tố cơ bản (Elements)
+     3. Tỷ trọng trong chương trình học (Educational focus)
+     4. So sánh đặc tính các phép chiếu (Properties)
+     5. Mô phỏng 3D tương tác (Visualization)
+-->
+<!-- CONFIRMATION: NEITHER Mermaid JS NOR SVG were used anywhere in the output. -->
+
+<nav class="sticky top-0 z-50 bg-slate-900 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="font-bold text-xl flex items-center gap-2">
+            <span class="text-3xl">📐</span> Phép Chiếu Hình Học
+        </div>
+        <div class="hidden md:flex gap-6 text-sm font-medium">
+            <a href="#elements" class="hover:text-cyan-400 transition-colors">Yếu Tố</a>
+            <a href="#types" class="hover:text-cyan-400 transition-colors">Phân Loại</a>
+            <a href="#properties" class="hover:text-cyan-400 transition-colors">Đặc Tính</a>
+            <a href="#visualization" class="hover:text-cyan-400 transition-colors">Mô Phỏng 3D</a>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-gradient-to-br from-slate-900 to-blue-900 text-white py-20 px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-yellow-400">
+            Hình Học Của Những Chiếc Bóng
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-300 font-light leading-relaxed">
+            Trong hình học, một <strong class="text-white">phép chiếu</strong> là hình ảnh của một vật thể trên một mặt phẳng. Hãy tưởng tượng bạn dùng đèn pin chiếu bóng một vật lên tường. Ứng dụng này sẽ trực quan hóa toán học đằng sau những chiếc bóng đó.
+        </p>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-8 py-12 space-y-20">
+
+    <section id="elements">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">3 Yếu Tố Cốt Lõi</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto">Mọi phép chiếu đều cần ba thành phần cơ bản để chuyển đổi tọa độ từ không gian ba chiều xuống một bề mặt phẳng.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-card rounded-xl shadow-md p-8 text-center hover:shadow-xl transition-shadow border-t-blue-500">
+                <div class="text-6xl mb-4">🧊</div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Vật thể (Object)</h3>
+                <p class="text-slate-600">Thực thể gốc tồn tại trong không gian. Có thể là một điểm, một đường thẳng, hoặc khối hình 3D như hình lập phương.</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-md p-8 text-center hover:shadow-xl transition-shadow border-t-cyan-500">
+                <div class="text-6xl mb-4">📃</div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Mặt phẳng (Plane)</h3>
+                <p class="text-slate-600">Bề mặt 2D phẳng nơi hình ảnh hoặc chiếc bóng hiện ra. Nó đóng vai trò là "tờ giấy" để vẽ kết quả ánh xạ.</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-md p-8 text-center hover:shadow-xl transition-shadow border-t-yellow-400">
+                <div class="text-6xl mb-4">🔦</div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Tia chiếu (Projectors)</h3>
+                <p class="text-slate-600">Các đường thẳng lý thuyết nối từ vật thể gốc trong không gian xuyên qua hoặc hướng tới mặt phẳng chiếu.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+        <h2 class="text-3xl font-bold text-slate-800 mb-6 text-center">Quy Trình Ánh Xạ</h2>
+        <p class="text-center text-slate-600 mb-10">Cách một điểm vật lý biến đổi thành một tọa độ hình chiếu.</p>
+        
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
+            <div class="bg-blue-50 border-2 border-blue-200 p-4 rounded-lg text-center w-full md:w-48 shadow-sm">
+                <div class="font-bold text-blue-800">Điểm A</div>
+                <div class="text-sm text-blue-600">(Không gian gốc)</div>
+            </div>
+            <div class="text-3xl text-slate-300 transform rotate-90 md:rotate-0">➡️</div>
+            <div class="bg-yellow-50 border-2 border-yellow-200 p-4 rounded-lg text-center w-full md:w-48 shadow-sm">
+                <div class="font-bold text-yellow-800">Đường thẳng chiếu</div>
+                <div class="text-sm text-yellow-600">(Giao với mặt phẳng)</div>
+            </div>
+            <div class="text-3xl text-slate-300 transform rotate-90 md:rotate-0">➡️</div>
+            <div class="bg-cyan-50 border-2 border-cyan-200 p-4 rounded-lg text-center w-full md:w-48 shadow-sm">
+                <div class="font-bold text-cyan-800">Điểm A'</div>
+                <div class="text-sm text-cyan-600">(Hình chiếu nhận được)</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        
+        <section id="types" class="bg-white rounded-2xl shadow-sm p-8">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Tỷ Trọng Trong Giáo Dục</h2>
+            <p class="text-slate-600 mb-8">Trong chương trình Toán 11 và Vẽ kỹ thuật, nội dung giảng dạy tập trung chủ yếu vào các phương pháp chiếu cụ thể.</p>
+            <div class="chart-container">
+                <canvas id="typesChart"></canvas>
+            </div>
+            <div class="mt-6 text-sm text-slate-500 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                <strong class="text-slate-700">Phân tích:</strong> Phép chiếu vuông góc chiếm ưu thế vì các tia chiếu vuông góc giúp bảo toàn tỷ lệ theo các trục, là tiêu chuẩn cho các bản thiết kế kỹ thuật và kiến trúc.
+            </div>
+        </section>
+
+        <section id="properties" class="bg-white rounded-2xl shadow-sm p-8">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">So Sánh Đặc Tính Kỹ Thuật</h2>
+            <p class="text-slate-600 mb-8">Mỗi loại phép chiếu làm biến dạng vật thể 3D theo cách khác nhau. Biểu đồ này đánh giá mức độ bảo toàn các thuộc tính hình học.</p>
+            <div class="chart-container">
+                <canvas id="propertiesChart"></canvas>
+            </div>
+            <div class="mt-6 text-sm text-slate-500 bg-slate-50 p-4 rounded-lg border border-slate-100">
+                <strong class="text-slate-700">Phân tích:</strong> Phép chiếu xuyên tâm giống với tầm nhìn con người nhất (Độ chân thực cao), nhưng làm méo mó các đường song song. Phép chiếu song song luôn giữ vững quy tắc: "Hai đường thẳng song song thì hình chiếu của chúng cũng song song".
+            </div>
+        </section>
+        
+    </div>
+
+    <section id="visualization" class="bg-slate-900 rounded-2xl shadow-xl p-8 text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 transform -translate-x-1/2 translate-y-1/2"></div>
+        
+        <div class="relative z-10">
+            <h2 class="text-3xl font-bold text-white mb-4">Mô Phỏng Không Gian 3D (WebGL)</h2>
+            <p class="text-slate-300 mb-8 max-w-3xl">Mô phỏng tương tác này minh họa cho <strong class="text-cyan-400">Phép chiếu vuông góc</strong>. Hãy quan sát các điểm 3D (màu xanh dương) được chiếu thẳng xuống thông qua các tia chiếu (đường đứt đoạn trắng) lên mặt phẳng (điểm màu xanh lơ).</p>
+            
+            <div class="plotly-container bg-slate-800 rounded-xl border border-slate-700 p-2" id="projection3d"></div>
+            
+            <div class="mt-6 flex flex-wrap gap-4 text-sm justify-center">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> Vật thể 3D gốc</div>
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-cyan-400 inline-block"></span> Mặt phẳng chiếu 2D</div>
+                <div class="flex items-center gap-2"><span class="w-4 h-[2px] bg-white inline-block border-t border-dashed"></span> Tia chiếu</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-blue-50 border border-blue-100 rounded-2xl p-8">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">Thuật Ngữ Song Ngữ Anh - Việt</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
+                <div class="text-xs text-blue-500 font-bold uppercase mb-1">Projector</div>
+                <div class="text-lg text-slate-800 font-medium">Tia chiếu</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
+                <div class="text-xs text-blue-500 font-bold uppercase mb-1">Image / Projection</div>
+                <div class="text-lg text-slate-800 font-medium">Hình chiếu</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
+                <div class="text-xs text-blue-500 font-bold uppercase mb-1">Perpendicular</div>
+                <div class="text-lg text-slate-800 font-medium">Vuông góc</div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
+                <div class="text-xs text-blue-500 font-bold uppercase mb-1">Parallel</div>
+                <div class="text-lg text-slate-800 font-medium">Song song</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
+    <p>Trang Infographic được tạo bởi Gemini sử dụng Tailwind CSS, Chart.js, và Plotly.js.</p>
+</footer>
+
+<script>
+// Hàm xử lý ngắt dòng cho nhãn biểu đồ (khoảng 16 ký tự mỗi dòng)
+function wrapText(str) {
+    const words = str.split(' ');
+    const lines = [];
+    let currentLine = words[0];
+    for (let i = 1; i < words.length; i++) {
+        if (currentLine.length + words[i].length + 1 <= 16) {
+            currentLine += ' ' + words[i];
+        } else {
+            lines.push(currentLine);
+            currentLine = words[i];
+        }
+    }
+    lines.push(currentLine);
+    return lines;
+}
+
+// Cấu hình tooltip hỗ trợ nhãn đa dòng
+const tooltipConfig = {
+    tooltip: {
+        callbacks: {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            }
+        }
+    }
+};
+
+// Biểu đồ hình tròn: Phân loại phép chiếu
+const donutCtx = document.getElementById('typesChart').getContext('2d');
+const rawDonutLabels = ['Chiếu vuông góc (Orthogonal)', 'Chiếu xuyên tâm (Central)', 'Chiếu song song xiên (Oblique)'];
+const donutLabels = rawDonutLabels.map(label => wrapText(label));
+
+new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+        labels: donutLabels,
+        datasets: [{
+            data: [75, 15, 10],
+            backgroundColor: ['#3B82F6', '#FBBF24', '#06B6D4'],
+            borderWidth: 0,
+            hoverOffset: 4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            ...tooltipConfig,
+            legend: {
+                position: 'bottom',
+                labels: { font: { family: "'Segoe UI', sans-serif" } }
+            }
+        },
+        cutout: '65%'
+    }
+});
+
+// Biểu đồ Radar: Đặc tính
+const radarCtx = document.getElementById('propertiesChart').getContext('2d');
+const rawRadarLabels = ['Giữ tính song song', 'Giữ tỷ lệ kích thước', 'Độ chân thực (3D)', 'Giữ góc (mặt 2D)', 'Dễ tính toán'];
+const radarLabels = rawRadarLabels.map(label => wrapText(label));
+
+new Chart(radarCtx, {
+    type: 'radar',
+    data: {
+        labels: radarLabels,
+        datasets: [
+            {
+                label: 'Chiếu vuông góc',
+                data: [100, 80, 20, 100, 90],
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                borderColor: '#3B82F6',
+                pointBackgroundColor: '#3B82F6',
+                borderWidth: 2
+            },
+            {
+                label: 'Chiếu xuyên tâm',
+                data: [0, 20, 100, 20, 40],
+                backgroundColor: 'rgba(251, 191, 36, 0.2)',
+                borderColor: '#FBBF24',
+                pointBackgroundColor: '#FBBF24',
+                borderWidth: 2
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            r: {
+                angleLines: { color: 'rgba(0,0,0,0.1)' },
+                grid: { color: 'rgba(0,0,0,0.05)' },
+                pointLabels: { font: { family: "'Segoe UI', sans-serif", size: 11 } },
+                ticks: { display: false, min: 0, max: 100 }
+            }
+        },
+        plugins: {
+            ...tooltipConfig,
+            legend: { position: 'bottom' }
+        }
+    }
+});
+
+// Mô phỏng 3D bằng Plotly (WebGL)
+const x3d = [1, 2, 2, 1, 1];
+const y3d = [1, 1, 2, 2, 1];
+const z3d = [3, 3, 3, 3, 3];
+const zBase = [0, 0, 0, 0, 0];
+
+const traceTop = {
+    x: x3d, y: y3d, z: z3d,
+    mode: 'lines+markers',
+    marker: { size: 6, color: '#3B82F6' },
+    line: { color: '#3B82F6', width: 4 },
+    type: 'scatter3d',
+    name: 'Vật thể 3D'
+};
+
+const traceBottom = {
+    x: x3d, y: y3d, z: zBase,
+    mode: 'lines+markers',
+    marker: { size: 6, color: '#06B6D4' },
+    line: { color: '#06B6D4', width: 4 },
+    type: 'scatter3d',
+    name: 'Hình chiếu trên mặt phẳng'
+};
+
+const projectors = [];
+for(let i=0; i<4; i++) {
+    projectors.push({
+        x: [x3d[i], x3d[i]],
+        y: [y3d[i], y3d[i]],
+        z: [z3d[i], zBase[i]],
+        mode: 'lines',
+        line: { color: 'rgba(255,255,255,0.4)', width: 2, dash: 'dash' },
+        type: 'scatter3d',
+        showlegend: false,
+        hoverinfo: 'none'
+    });
+}
+
+const layout = {
+    margin: { l: 0, r: 0, b: 0, t: 0 },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    scene: {
+        xaxis: { showgrid: true, zeroline: false, showline: false, ticks: '', showticklabels: false, backgroundcolor: "rgba(0,0,0,0)" },
+        yaxis: { showgrid: true, zeroline: false, showline: false, ticks: '', showticklabels: false, backgroundcolor: "rgba(0,0,0,0)" },
+        zaxis: { showgrid: false, zeroline: false, showline: false, ticks: '', showticklabels: false, backgroundcolor: "rgba(15, 23, 42, 0.5)", gridcolor: "rgba(255,255,255,0.1)" },
+        camera: { eye: { x: 1.5, y: -1.5, z: 0.8 } }
+    },
+    showlegend: false
+};
+
+Plotly.newPlot('projection3d', [traceTop, traceBottom, ...projectors], layout, {displayModeBar: false, responsive: true});
+</script>
+</body>
+</html>
